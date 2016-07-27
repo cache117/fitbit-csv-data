@@ -1,3 +1,0 @@
-[submodule "src/main/resources/google-oauth-java-client"]
-	path = src/main/resources/google-oauth-java-client
-	url = https://github.com/google/google-oauth-java-client.git
