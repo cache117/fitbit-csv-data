@@ -24,8 +24,16 @@
         <processorPath useClasspath="true" />
         <module name="SHealth-to-FitBit" />
       </profile>
+      <profile default="false" name="Annotation profile for fitbit-csv-data" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="fitbit-csv-data" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="fitbit-csv-data" target="1.8" />
       <module name="SHealth-to-FitBit" target="1.8" />
     </bytecodeTargetLevel>
   </component>
