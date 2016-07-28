@@ -34,11 +34,44 @@ public class SleepLog extends FitbitLog
             for (CSVRecord record : parser)
             {
                 Sleep sleep = new Sleep(record);
+                this.sleep.put(sleep.getDate(), sleep);
             }
         } catch (IOException e)
         {
             e.printStackTrace();
         }
+    }
+
+    public int getMinutesAsleep(Date date)
+    {
+        if (sleep.get(date) != null)
+            return sleep.get(date)
+                    .getMinutesAsleep();
+        return 0;
+    }
+
+    public int getMinutesAwake(Date date)
+    {
+        if (sleep.get(date) != null)
+            return sleep.get(date)
+                    .getMinutesAwake();
+        return 0;
+    }
+
+    public int getNumberOfAwakenings(Date date)
+    {
+        if (sleep.get(date) != null)
+            return sleep.get(date)
+                    .getNumberOfAwakenings();
+        return 0;
+    }
+
+    public int getTimeInBed(Date date)
+    {
+        if (sleep.get(date) != null)
+            return sleep.get(date)
+                    .getTimeInBed();
+        return 0;
     }
 
     private class Sleep extends LogLine

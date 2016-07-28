@@ -29,6 +29,7 @@ public class BodyLog extends FitbitLog
             for (CSVRecord record : parser)
             {
                 Body body = new Body(record);
+                this.body.put(body.getDate(), body);
             }
         } catch (IOException e)
         {
@@ -39,6 +40,38 @@ public class BodyLog extends FitbitLog
     private BodyLog()
     {
         body = new HashMap<>();
+    }
+
+    public double getWeight(Date date)
+    {
+        if (body.get(date) != null)
+            return body.get(date)
+                    .getWeight();
+        return 0;
+    }
+
+    public double getBmi(Date date)
+    {
+        if (body.get(date) != null)
+            return body.get(date)
+                    .getBmi();
+        return 0;
+    }
+
+    public double getFatPercentage(Date date)
+    {
+        if (body.get(date) != null)
+            return body.get(date)
+                    .getFatPercentage();
+        return 0;
+    }
+
+    public double getRunning(Date date)
+    {
+        if (body.get(date) != null)
+            return body.get(date)
+                    .getRunning();
+        return 0;
     }
 
     private class Body extends LogLine

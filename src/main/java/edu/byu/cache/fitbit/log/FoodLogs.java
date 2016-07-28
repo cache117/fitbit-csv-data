@@ -5,6 +5,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -23,11 +24,17 @@ public class FoodLogs extends FitbitLog
 
     private class FoodLog extends LogLine
     {
+        private final List<String> breakfast;
+        private final List<String> lunch;
+        private final List<String> dinner;
         private int calories, gramsFat, gramsFiber, gramsCarbs, gramsSodium, gramsProtein, FluidicOuncesWater;
 
         public FoodLog(CSVRecord record)
         {
             super(record);
+            breakfast = new ArrayList<>();
+            lunch = new ArrayList<>();
+            dinner = new ArrayList<>();
         }
 
         @Override

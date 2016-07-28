@@ -24,7 +24,7 @@ public abstract class LogLine
     protected Date parseDate(CSVRecord record)
     {
         Date date;
-        DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         try
         {
             date = format.parse(record.get("Date"));

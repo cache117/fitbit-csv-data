@@ -1,6 +1,7 @@
 package edu.byu.cache.fitbit.file;
 
 import com.google.common.io.Files;
+import edu.byu.cache.fitbit.json.HealthyMePrinter;
 import edu.byu.cache.fitbit.log.*;
 
 import java.io.*;
@@ -26,7 +27,7 @@ public class FitbitCSVFile
     private CaloriesLog foods;
     private ActivitiesLog activities;
     private SleepLog sleep;
-    private List<FoodLogs> foodLogs;
+    private FoodLogs foodLogs;
 
     public FitbitCSVFile(String filePath) throws FileNotFoundException
     {
@@ -57,6 +58,12 @@ public class FitbitCSVFile
         try
         {
             FitbitCSVFile file = new FitbitCSVFile("C:\\Users\\cstaheli\\IdeaProjects\\SHealth-to-FitBit\\src\\main\\fitbit_export_20160712.csv");
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(2016, Calendar.JULY, 17);
+            Date start = calendar.getTime();
+            calendar.set(2016, Calendar.JULY, 18);
+            Date end = calendar.getTime();
+            String Json = file.toJson(JsonType.HEALTHY_ME, start, end);
         } catch (FileNotFoundException e)
         {
             e.printStackTrace();
@@ -109,20 +116,18 @@ public class FitbitCSVFile
                         sectionStart = lineNumber;
                         break;
                     case "":
-                        sectionEnd = lineNumber - 1;
+                        sectionEnd = lineNumber;
                         break;
                     default:
                         if (Pattern.compile("Food Log \\d{8}$")
                                 .matcher(line)
                                 .matches())
                         {
-                            if (foodLogsMarkers.size() == 0)
+                            if (sleepMarkers == null)
                             {
                                 sleepMarkers = new FileMarkers(sectionStart, sectionEnd);
-                            } else
-                            {
-                                foodLogsMarkers.add(new FileMarkers(sectionStart, sectionEnd));
                             }
+                            foodLogsMarkers.add(new FileMarkers(sectionStart, sectionEnd));
                             sectionStart = lineNumber;
                         }
                 }
@@ -149,7 +154,7 @@ public class FitbitCSVFile
         foods = getFoodsLog();
         activities = getActivitiesLog();
         sleep = getSleepLog();
-        foodLogs = new ArrayList<>();
+        foodLogs = null;
         //put together food logs.
     }
 
@@ -199,8 +204,24 @@ public class FitbitCSVFile
         return normalSections.get(section);
     }
 
+    public String toJson(JsonType type, Date start, Date end)
+    {
+        switch (type)
+        {
+            case HEALTHY_ME:
+                return HealthyMePrinter.printJson(activities, sleep, foodLogs, start, end);
+            default:
+                throw new RuntimeException("Not implemented");
+        }
+    }
+
     private enum Section
     {
         BODY, FOODS, ACTIVITIES, SLEEP, FOOD_LOGS
+    }
+
+    public enum JsonType
+    {
+        HEALTHY_ME
     }
 }

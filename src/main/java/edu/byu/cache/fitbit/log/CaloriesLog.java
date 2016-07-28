@@ -5,10 +5,8 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.NumberFormat;
+import java.util.*;
 
 public class CaloriesLog extends FitbitLog
 {
@@ -32,6 +30,7 @@ public class CaloriesLog extends FitbitLog
             for (CSVRecord record : parser)
             {
                 Calories calories = new Calories(record);
+                this.calories.put(calories.getDate(), calories);
             }
         } catch (IOException e)
         {
@@ -39,9 +38,12 @@ public class CaloriesLog extends FitbitLog
         }
     }
 
-    public static CaloriesLog create(String log)
+    public int getCaloriesIn(Date date)
     {
-        return null;
+        if (calories.get(date) != null)
+            return calories.get(date)
+                    .getCaloriesIn();
+        return 0;
     }
 
     private class Calories extends LogLine
@@ -56,7 +58,15 @@ public class CaloriesLog extends FitbitLog
         @Override
         protected void parseCSVRecord(CSVRecord record)
         {
-            caloriesIn = Integer.parseInt(record.get("Calories In"));
+            NumberFormat format = NumberFormat.getNumberInstance(Locale.US);
+            try
+            {
+                caloriesIn = format.parse(record.get("Calories In"))
+                        .intValue();
+            } catch (Exception e)
+            {
+
+            }
         }
 
         public int getCaloriesIn()
