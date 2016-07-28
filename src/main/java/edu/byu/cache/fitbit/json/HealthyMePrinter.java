@@ -1,5 +1,6 @@
 package edu.byu.cache.fitbit.json;
 
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import edu.byu.cache.fitbit.log.ActivitiesLog;
@@ -69,7 +70,9 @@ public class HealthyMePrinter
         }
         JsonObject logs = new JsonObject();
         logs.add("rows", rows);
-        return logs.toString();
+        return new GsonBuilder().setPrettyPrinting()
+                .create()
+                .toJson(logs);
     }
 
     private static Date getDate(LocalDate date)

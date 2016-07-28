@@ -48,28 +48,6 @@ public class FitbitCSVFile
         return builder.toString();
     }
 
-    private static String linesToStringStripTitle(List<String> lines)
-    {
-        return linesToString(lines.subList(1, lines.size()));
-    }
-
-    public static void main(String... args)
-    {
-        try
-        {
-            FitbitCSVFile file = new FitbitCSVFile("C:\\Users\\cstaheli\\IdeaProjects\\SHealth-to-FitBit\\src\\main\\fitbit_export_20160712.csv");
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(2016, Calendar.JULY, 17);
-            Date start = calendar.getTime();
-            calendar.set(2016, Calendar.JULY, 18);
-            Date end = calendar.getTime();
-            String Json = file.toJson(JsonType.HEALTHY_ME, start, end);
-        } catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
     private void parseFile(File file) throws FileNotFoundException
     {
         /*
