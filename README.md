@@ -9,4 +9,6 @@ Run `mvn package` to build the executable jar. Then, you can run the program wit
 Dates are in the format `yyyy-MM-dd`
 
 ##Limitations
-Currently, this only turns the csv files into Json readable import files which can be used by [this repository](https://github.com/cache117/wellness-auto-healthyme)
+- Currently, this only turns the csv files into Json readable import files which can be used by [this repository](https://github.com/cache117/wellness-auto-healthyme#importjson-file-format)
+- The Json will always report false for `fruit_veg_4_or_more_servings`
+- The Json will always report false for `water_5_or_more_cups`
