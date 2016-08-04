@@ -1,6 +1,9 @@
 # fitbit-csv-data
 This is a tool to convert data downloaded from Fitbit in CSV Format. This will turn the data into easily manageable Java Objects.
 
+##Obtaining a CSV file from Fitbit
+
+
 ##Usage
 Run `mvn package` to build the executable jar. Then, you can run the program with the following command:
 
